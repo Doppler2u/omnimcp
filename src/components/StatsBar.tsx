@@ -54,13 +54,13 @@ export default function StatsBar({ stats }: StatsBarProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.2 }}
-          className="panel-strong rounded-xl p-4"
+          className="panel-strong rounded-3xl p-5"
         >
           <div className="text-2xl font-semibold text-white mb-1 font-jetbrains-mono">
             <Counter from={0} to={stat.value} />
             <span className="text-cyan-400">{stat.suffix}</span>
           </div>
-          <div className="text-xs text-gray-500 uppercase tracking-[0.14em] font-semibold">
+          <div className="text-xs text-slate-400 uppercase tracking-[0.14em] font-semibold">
             {stat.label}
           </div>
         </motion.div>
