@@ -143,18 +143,18 @@ export default function Home() {
         <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0a0b10] to-transparent z-10 pointer-events-none"></div>
         <div className="flex w-[200%] animate-marquee">
           <div className="flex w-1/2 justify-around items-center text-slate-400 font-semibold tracking-wider text-sm uppercase">
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-cyan-400"></span> OpenAPI 3.0</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-cyan-400"></span> OpenAPI 3.1</span>
             <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-violet-400"></span> Model Context Protocol</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Next.js</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Schema Intelligence</span>
             <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-400"></span> OKX.AI Onchain OS</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-rose-400"></span> Anthropic Claude</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-rose-400"></span> AI Agent Generator</span>
           </div>
           <div className="flex w-1/2 justify-around items-center text-slate-400 font-semibold tracking-wider text-sm uppercase">
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-cyan-400"></span> OpenAPI 3.0</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-cyan-400"></span> OpenAPI 3.1</span>
             <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-violet-400"></span> Model Context Protocol</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Next.js</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Schema Intelligence</span>
             <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-400"></span> OKX.AI Onchain OS</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-rose-400"></span> Anthropic Claude</span>
+            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-rose-400"></span> AI Agent Generator</span>
           </div>
         </div>
       </section>
