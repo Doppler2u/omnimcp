@@ -1,0 +1,82 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "REST Countries API",
+    "version": "3.1.0",
+    "description": "Get information about countries via a RESTful API"
+  },
+  "servers": [
+    {
+      "url": "https://restcountries.com/v3.1"
+    }
+  ],
+  "paths": {
+    "/name/{name}": {
+      "get": {
+        "summary": "Search by country name",
+        "operationId": "getCountryByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the country"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/alpha/{code}": {
+      "get": {
+        "summary": "Search by country code",
+        "operationId": "getCountryByCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ISO 3166-1 2-letter or 3-letter country code"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/region/{region}": {
+      "get": {
+        "summary": "Search by region",
+        "operationId": "getCountryByRegion",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["africa", "americas", "asia", "europe", "oceania"]
+            },
+            "description": "Region name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}

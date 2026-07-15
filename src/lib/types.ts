@@ -76,10 +76,19 @@ export interface GeneratedAgent {
   authType: string;
   tools: MCPToolDefinition[];
   proxyHandlers: ProxyHandler[];
+  authConfig?: AgentAuthConfig;
   status: 'generating' | 'active' | 'error';
   toolCount: number;
   callCount: number;
   createdAt?: string;
+}
+
+/** Runtime auth injection config. Secrets are read from env vars, not stored. */
+export interface AgentAuthConfig {
+  type: 'apiKey' | 'bearer' | 'basic';
+  envVarName: string;
+  location?: 'header' | 'query';
+  name?: string;
 }
 
 /** Maps an MCP tool call to the underlying REST API call */
@@ -97,6 +106,9 @@ export interface ProxyHandler {
 export interface GenerateRequest {
   specUrl?: string;
   specJson?: Record<string, unknown>;
+  credentialEnvVar?: string;
+  credentialName?: string;
+  credentialLocation?: 'header' | 'query';
 }
 
 export interface GenerateResponse {

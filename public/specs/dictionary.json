@@ -1,0 +1,37 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Free Dictionary API",
+    "version": "2.0.0",
+    "description": "Free Dictionary API for English"
+  },
+  "servers": [
+    {
+      "url": "https://api.dictionaryapi.dev/api/v2"
+    }
+  ],
+  "paths": {
+    "/entries/en/{word}": {
+      "get": {
+        "summary": "Get dictionary entry",
+        "operationId": "getDictionaryEntry",
+        "parameters": [
+          {
+            "name": "word",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The English word to look up"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}

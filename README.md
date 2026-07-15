@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OmniMCP — API-to-Agent Automator
 
-## Getting Started
+*Built for the OKX.AI Genesis Hackathon*
 
-First, run the development server:
+**OmniMCP** is an autonomous meta-agent that reads any OpenAPI/Swagger spec and instantly generates a functional MCP-style agent surface. It transforms legacy Web2 APIs into deployable Agent Service Provider (ASP) candidates for OKX.AI in under 60 seconds.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🌟 Why OmniMCP?
+OKX.AI is the world's first A2A agent economy. While A2A (Agent-to-Agent) is great for complex tasks, standard API services are best suited for **A2MCP (Agent-to-MCP)** endpoints. 
+
+OmniMCP solves the marketplace **cold-start problem**. Instead of manually writing and hosting custom integration code for every API, OmniMCP allows developers to instantly onboard thousands of existing Web2 APIs (like weather, crypto prices, dictionaries, etc.) into the Web3 agentic economy.
+
+## ✨ Features
+- **Intelligent Parsing:** Automatically fetches and normalizes OpenAPI 3.x and Swagger 2.0 specifications.
+- **AI-Powered Mapping:** Uses Google Gemini (Flash) to intelligently translate REST endpoints into semantic, descriptive MCP tool definitions that other AI agents can easily understand.
+- **Universal Proxy Engine:** Dynamically intercepts MCP tool calls, reconstructs the underlying HTTP request (mapping path, query, and body params), executes the Web2 REST call, and returns the result.
+- **MCP JSON-RPC Endpoint:** Each generated agent exposes `/api/agents/[id]/mcp` with `initialize`, `tools/list`, and `tools/call` methods for agent-to-agent demos.
+- **Interactive Tool Tester:** A beautiful, glassmorphic UI that automatically generates test forms based on the AI-generated JSON schema of your new tools.
+- **Zero-Cost Deployment:** Uses a file-backed local agent store for the hackathon MVP, meaning it can run with a ₹0 budget and zero database setup.
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- A free [Google Gemini API Key](https://aistudio.google.com/apikey)
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/omnimcp.git
+   cd omnimcp
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Configure Environment Variables:
+   Copy the example environment file and add your Gemini API key.
+   ```bash
+   cp .env.example .env.local
+   ```
+   Open `.env.local` and set:
+   ```env
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🛠️ Tech Stack
+- **Frontend:** Next.js 16 (App Router), React, Tailwind CSS, Framer Motion
+- **Backend:** Next.js Serverless API Routes
+- **AI Engine:** Google Gemini SDK (`gemini-flash-latest`)
+- **Parsing:** Lightweight OpenAPI/Swagger JSON normalizer in `src/lib/openapi-parser.ts`
+- **Design:** Glassmorphism, JetBrains Mono, Inter
+
+## MCP Endpoint
+Each generated agent exposes a JSON-RPC endpoint at:
+
+```text
+/api/agents/[id]/mcp
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Supported methods:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```json
+{ "jsonrpc": "2.0", "id": 1, "method": "initialize" }
+{ "jsonrpc": "2.0", "id": 2, "method": "tools/list" }
+{ "jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": { "name": "get_country_by_code", "arguments": { "code": "IN" } } }
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## API Credentials
+For APIs that require credentials, OmniMCP stores an environment variable name instead of storing the secret value. Add the secret to your server environment, then use the credential field in the generator:
 
-## Learn More
+```env
+WEATHER_API_KEY=your_real_secret
+```
 
-To learn more about Next.js, take a look at the following resources:
+API key auth can be injected as a header or query parameter. Bearer auth uses `Authorization: Bearer <token>`. Basic auth expects the env var value to be `username:password`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💡 Hackathon Demo Note
+To guarantee a flawless live presentation without relying on flaky free-tier AI APIs during high-traffic spikes, the application includes a **"Demo Safe Mode"**. If the Gemini API experiences a `503 High Demand` or `429 Quota` error, OmniMCP will seamlessly intercept the error and return pre-computed configurations for the demo APIs (PetStore and Dictionary). 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📜 License
+MIT License
