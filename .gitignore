@@ -61,9 +61,11 @@ next-env.d.ts
 *.swo
 
 # local AI/editor artifacts
+.agents/
 .claude/
 .cursor/
 .continue/
+skills-lock.json
 
 # private project notes / agent handoff files
 SKILL.md
