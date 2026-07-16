@@ -1,6 +1,6 @@
 # OmniMCP — API-to-Agent Automator
 
-*Built for the OKX.AI Genesis Hackathon*
+*Built for the OKX.AI Genesis Hackathon* | 🏆 **Registered ASP Agent ID: #6139**
 
 **OmniMCP** is an autonomous meta-agent that reads any OpenAPI/Swagger spec and instantly generates a functional MCP-style agent surface. It transforms legacy Web2 APIs into deployable Agent Service Provider (ASP) candidates for OKX.AI in under 60 seconds.
 
