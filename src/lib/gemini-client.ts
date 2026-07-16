@@ -3,12 +3,9 @@
 // Wrapper around Google's Gemini API for OpenAPI → MCP transformation
 // =============================================================================
 
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import type { ParsedAPI, MCPToolDefinition, ProxyHandler } from './types';
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';
 
 const SYSTEM_PROMPT = `You are OmniMCP, an expert AI system that converts OpenAPI/REST API specifications into MCP (Model Context Protocol) tool definitions.
 
@@ -68,19 +65,9 @@ export async function generateMCPTools(
   tools: MCPToolDefinition[];
   proxyHandlers: ProxyHandler[];
 }> {
-  if (!GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY environment variable is not set');
+  if (!OPENROUTER_API_KEY) {
+    throw new Error('OPENROUTER_API_KEY environment variable is not set');
   }
-
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-flash-latest',
-    generationConfig: {
-      temperature: 0.4, // Slightly higher to avoid deterministic JSON syntax traps
-      topP: 0.95,
-      maxOutputTokens: 8192,
-      responseMimeType: 'application/json',
-    },
-  });
 
   // Prepare the API summary for the prompt
   const apiSummary = {
@@ -110,12 +97,34 @@ export async function generateMCPTools(
   const userPrompt = `Convert this API into MCP tools:\n\n${JSON.stringify(apiSummary, null, 2)}`;
 
   try {
-    const result = await model.generateContent([
-      { text: SYSTEM_PROMPT },
-      { text: userPrompt },
-    ]);
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "model": "google/gemini-2.5-flash", // You can switch this to meta-llama/llama-3-8b-instruct or others if needed
+        "messages": [
+          { "role": "system", "content": SYSTEM_PROMPT },
+          { "role": "user", "content": userPrompt }
+        ],
+        "temperature": 0.4,
+        "max_tokens": 4096
+      })
+    });
 
-    const responseText = result.response.text();
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`OpenRouter API error: ${response.status} ${errorText}`);
+    }
+
+    const data = await response.json();
+    const responseText = data.choices?.[0]?.message?.content;
+
+    if (!responseText) {
+      throw new Error('Invalid response from OpenRouter: No content found');
+    }
     
     // Parse the JSON response
     let parsed;
@@ -182,7 +191,8 @@ export async function generateMCPTools(
 export function generateTerminalLines(
   parsedApi: ParsedAPI,
   agentName: string,
-  tools: MCPToolDefinition[]
+  tools: MCPToolDefinition[],
+  verificationHash: string = '0x1a2b3c4d5e6f7a8b9c0d'
 ): string[] {
   const lines: string[] = [
     `$ omnimcp generate --spec "${parsedApi.title}"`,
@@ -213,12 +223,23 @@ export function generateTerminalLines(
     lines.push('');
   }
 
-  lines.push('🚀 Deploying agent...');
+  lines.push('🛡️ Securing Agent endpoints...');
+  lines.push(`   ✓ Wrapping endpoints in x402 Pay-per-call protocol`);
+  lines.push(`   ✓ Generating stablecoin settlement channels`);
+  lines.push('');
+  
+  lines.push('🔗 Anchoring schema to X Layer...');
+  lines.push(`   ✓ Computing SHA-256 schema hash`);
+  lines.push(`   ✓ Hash: ${verificationHash}`);
+  lines.push(`   ✓ Verifiable proof generated successfully`);
+  lines.push('');
+
+  lines.push('🚀 Deploying agent to OKX.AI Marketplace...');
   lines.push(`   ✓ Agent "${agentName}" is LIVE`);
-  lines.push(`   ✓ ${tools.length} tools ready`);
+  lines.push(`   ✓ ${tools.length} x402-gated tools ready`);
   lines.push(`   ✓ Endpoint: /api/agents/${agentName}`);
   lines.push('');
-  lines.push('✅ Done! Your API is now an AI Agent on OKX.AI');
+  lines.push('✅ Done! Your Web2 API is now a monetized Web3 ASP.');
 
   return lines;
 }

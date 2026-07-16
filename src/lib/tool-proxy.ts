@@ -12,6 +12,22 @@ export interface ToolExecutionResult {
   };
 }
 
+function findArgValue(toolArgs: Record<string, unknown>, paramName: string): unknown {
+  if (toolArgs[paramName] !== undefined) return toolArgs[paramName];
+  
+  const snakeParam = paramName.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+  if (toolArgs[snakeParam] !== undefined) return toolArgs[snakeParam];
+  
+  const camelParam = paramName.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+  if (toolArgs[camelParam] !== undefined) return toolArgs[camelParam];
+  
+  const lowerParam = paramName.toLowerCase().replace(/_/g, '');
+  const match = Object.keys(toolArgs).find(k => k.toLowerCase().replace(/_/g, '') === lowerParam);
+  if (match) return toolArgs[match];
+  
+  return undefined;
+}
+
 export async function executeAgentTool(
   agent: GeneratedAgent,
   toolName: string,
@@ -30,7 +46,7 @@ export async function executeAgentTool(
   let url = `${agent.baseUrl}${handler.pathTemplate}`;
 
   for (const param of handler.pathParams) {
-    const value = toolArgs[param];
+    const value = findArgValue(toolArgs, param);
     if (value !== undefined) {
       url = url.replace(`{${param}}`, encodeURIComponent(String(value)));
     }
@@ -38,7 +54,7 @@ export async function executeAgentTool(
 
   const queryParts: string[] = [];
   for (const param of handler.queryParams) {
-    const value = toolArgs[param];
+    const value = findArgValue(toolArgs, param);
     if (value !== undefined) {
       queryParts.push(`${encodeURIComponent(param)}=${encodeURIComponent(String(value))}`);
     }
@@ -71,8 +87,9 @@ export async function executeAgentTool(
   if (['POST', 'PUT', 'PATCH'].includes(handler.method) && handler.bodyParams.length > 0) {
     const bodyData: Record<string, unknown> = {};
     for (const param of handler.bodyParams) {
-      if (toolArgs[param] !== undefined) {
-        bodyData[param] = toolArgs[param];
+      const value = findArgValue(toolArgs, param);
+      if (value !== undefined) {
+        bodyData[param] = value;
       }
     }
 

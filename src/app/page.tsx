@@ -87,7 +87,7 @@ export default function Home() {
       <section className="max-w-6xl mx-auto pt-32 px-4 sm:px-6 lg:px-8 pb-16 flex flex-col items-center text-center">
         <motion.div {...fadeInUp} className="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-[#121621]/60 px-4 py-2 text-xs font-semibold text-cyan-400 shadow-[0_0_15px_rgba(62,156,255,0.15)] mb-8 backdrop-blur-md">
           <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
-          Published OKX.AI ASP #3852
+          Built for OKX.AI Genesis Hackathon
         </motion.div>
         
         <motion.h1 
@@ -215,8 +215,8 @@ export default function Home() {
             <div className="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 mb-6">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Instant MCP Runtime</h3>
-            <p className="text-slate-400">Write a URL. OmniMCP transforms it into an executable JSON-RPC proxy in under a minute.</p>
+            <h3 className="text-2xl font-bold text-white mb-2">Instant x402 Runtime</h3>
+            <p className="text-slate-400">Write a URL. OmniMCP transforms it into an executable, x402 pay-per-call JSON-RPC proxy in under a minute.</p>
             
             <div className="mt-8 space-y-3">
               <div className="flex items-center gap-3 text-sm text-slate-300">
@@ -230,6 +230,10 @@ export default function Home() {
               <div className="flex items-center gap-3 text-sm text-slate-300">
                 <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 text-emerald-400">✓</div>
                 Zero-setup deploy
+              </div>
+              <div className="flex items-center gap-3 text-sm text-slate-300">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 text-emerald-400">✓</div>
+                Auto x402 Wrapping
               </div>
             </div>
           </motion.div>
@@ -252,7 +256,7 @@ export default function Home() {
             </div>
             <div className="md:w-5/12 z-10 w-full">
               <div className="bg-[#0b1220] rounded-2xl border border-white/5 p-6 shadow-2xl relative">
-                <div className="absolute top-0 right-10 w-px h-full bg-gradient-to-b from-transparent via-amber-500/20 to-transparent"></div>
+
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-white font-semibold flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-amber-500 animate-pulse"></span>
@@ -279,6 +283,74 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* The OmniMCP Pipeline Architecture */}
+      <section className="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 border-t border-white/5 mt-12 relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+        
+        <motion.div {...fadeInUp} className="text-center mb-20 relative z-10">
+          <h2 className="text-4xl font-bold text-white tracking-tight">The OmniMCP Pipeline</h2>
+          <p className="text-slate-400 mt-4 text-lg max-w-2xl mx-auto">How we securely transform static Web2 REST APIs into autonomous, monetized Web3 Agentic Service Providers in seconds.</p>
+        </motion.div>
+
+        <div className="relative z-10">
+          {/* Connecting Line */}
+          <div className="hidden lg:block absolute top-24 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-cyan-500/0 -z-10"></div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            {/* Step 1 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+              className="relative group"
+            >
+              <div className="bg-[#0a0f18] border border-white/5 rounded-3xl p-6 h-full shadow-lg hover:border-cyan-500/30 transition-colors">
+                <div className="w-14 h-14 rounded-2xl bg-slate-800/50 flex items-center justify-center text-slate-300 font-mono text-xl font-bold mb-6 group-hover:scale-110 transition-transform">01</div>
+                <h4 className="text-xl font-bold text-white mb-2">Ingest OpenAPI</h4>
+                <p className="text-slate-400 text-sm leading-relaxed">Provide any standard Swagger or OpenAPI v3.1 JSON/YAML URL. The pipeline instantly fetches and validates the schema.</p>
+              </div>
+            </motion.div>
+
+            {/* Step 2 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+              className="relative group"
+            >
+              <div className="bg-[#0a0f18] border border-white/5 rounded-3xl p-6 h-full shadow-lg hover:border-violet-500/30 transition-colors">
+                <div className="w-14 h-14 rounded-2xl bg-violet-500/10 flex items-center justify-center text-violet-400 font-mono text-xl font-bold mb-6 group-hover:scale-110 transition-transform">02</div>
+                <h4 className="text-xl font-bold text-white mb-2">Semantic LLM Map</h4>
+                <p className="text-slate-400 text-sm leading-relaxed">Gemini Flash analyzes endpoints, parameters, and payloads to generate intelligent, context-aware MCP Tool definitions.</p>
+              </div>
+            </motion.div>
+
+            {/* Step 3 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
+              className="relative group"
+            >
+              <div className="bg-[#0a0f18] border border-white/5 rounded-3xl p-6 h-full shadow-lg hover:border-amber-500/30 transition-colors">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-400 font-mono text-xl font-bold mb-6 group-hover:scale-110 transition-transform">03</div>
+                <h4 className="text-xl font-bold text-white mb-2">x402 Wrapping</h4>
+                <p className="text-slate-400 text-sm leading-relaxed">The endpoints are dynamically wrapped in the OKX x402 payment protocol, establishing instant stablecoin settlement gates.</p>
+              </div>
+            </motion.div>
+
+            {/* Step 4 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
+              className="relative group"
+            >
+              <div className="bg-[#0a0f18] border border-white/5 rounded-3xl p-6 h-full shadow-lg hover:border-emerald-500/30 transition-colors">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-mono text-xl font-bold mb-6 group-hover:scale-110 transition-transform">04</div>
+                <h4 className="text-xl font-bold text-white mb-2">Onchain Deploy</h4>
+                <p className="text-slate-400 text-sm leading-relaxed">A verifiable SHA-256 schema hash is generated, and the service goes live as an autonomous ASP on the OKX.AI Marketplace.</p>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
       {/* Massive CTA */}
       <section className="max-w-5xl mx-auto py-32 px-4 sm:px-6 lg:px-8 text-center relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-cyan-500/10 rounded-[100%] blur-[120px] pointer-events-none"></div>

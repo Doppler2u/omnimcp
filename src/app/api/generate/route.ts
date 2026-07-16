@@ -4,6 +4,7 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 import { parseOpenAPISpec } from '@/lib/openapi-parser';
 import { generateMCPTools, generateTerminalLines } from '@/lib/gemini-client';
 import { saveAgent } from '@/lib/agent-store';
@@ -62,8 +63,12 @@ export async function POST(request: NextRequest) {
       callCount: 0,
     });
 
-    // Step 4: Generate terminal output lines for the frontend animation
-    const terminalLines = generateTerminalLines(parsedApi, agentName, tools);
+    // Step 4: Compute a real verification hash for the schema
+    const specContentToHash = specJson ? JSON.stringify(specJson) : JSON.stringify(parsedApi);
+    const verificationHash = '0x' + crypto.createHash('sha256').update(specContentToHash).digest('hex');
+
+    // Step 5: Generate terminal output lines for the frontend animation
+    const terminalLines = generateTerminalLines(parsedApi, agentName, tools, verificationHash);
 
     return NextResponse.json({
       success: true,

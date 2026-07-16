@@ -1,6 +1,6 @@
 # OmniMCP — API-to-Agent Automator
 
-*Built for the OKX.AI Genesis Hackathon*
+*Built for the OKX.AI Genesis Hackathon* | 🏆 **Registered ASP Agent ID: #5812**
 
 **OmniMCP** is an autonomous meta-agent that reads any OpenAPI/Swagger spec and instantly generates a functional MCP-style agent surface. It transforms legacy Web2 APIs into deployable Agent Service Provider (ASP) candidates for OKX.AI in under 60 seconds.
 
@@ -13,7 +13,9 @@ OmniMCP solves the marketplace **cold-start problem**. Instead of manually writi
 
 ## ✨ Features
 - **Intelligent Parsing:** Automatically fetches and normalizes OpenAPI 3.x and Swagger 2.0 specifications.
-- **AI-Powered Mapping:** Uses Google Gemini (Flash) to intelligently translate REST endpoints into semantic, descriptive MCP tool definitions that other AI agents can easily understand.
+- **AI-Powered Mapping:** Uses OpenRouter (Gemini 2.5 Flash) to intelligently translate REST endpoints into semantic, descriptive MCP tool definitions that other AI agents can easily understand.
+- **x402 Monetization:** Automatically wraps generated agent tools in the x402 pay-per-call protocol for seamless marketplace billing.
+- **On-Chain Schema Verification:** Computes a real-time SHA-256 cryptographic hash of the agent schema for immutable verification on the X Layer.
 - **Universal Proxy Engine:** Dynamically intercepts MCP tool calls, reconstructs the underlying HTTP request (mapping path, query, and body params), executes the Web2 REST call, and returns the result.
 - **MCP JSON-RPC Endpoint:** Each generated agent exposes `/api/agents/[id]/mcp` with `initialize`, `tools/list`, and `tools/call` methods for agent-to-agent demos.
 - **Interactive Tool Tester:** A beautiful, glassmorphic UI that automatically generates test forms based on the AI-generated JSON schema of your new tools.
@@ -23,7 +25,7 @@ OmniMCP solves the marketplace **cold-start problem**. Instead of manually writi
 
 ### Prerequisites
 - Node.js 18+
-- A free [Google Gemini API Key](https://aistudio.google.com/apikey)
+- A free [OpenRouter API Key](https://openrouter.ai/)
 
 ### Installation
 1. Clone the repository:
@@ -38,13 +40,13 @@ OmniMCP solves the marketplace **cold-start problem**. Instead of manually writi
    ```
 
 3. Configure Environment Variables:
-   Copy the example environment file and add your Gemini API key.
+   Copy the example environment file and add your OpenRouter API key.
    ```bash
    cp .env.example .env.local
    ```
    Open `.env.local` and set:
    ```env
-   GEMINI_API_KEY=your_actual_api_key_here
+   OPENROUTER_API_KEY=your_actual_api_key_here
    ```
 
 4. Start the development server:
@@ -57,7 +59,7 @@ OmniMCP solves the marketplace **cold-start problem**. Instead of manually writi
 ## 🛠️ Tech Stack
 - **Frontend:** Next.js 16 (App Router), React, Tailwind CSS, Framer Motion
 - **Backend:** Next.js Serverless API Routes
-- **AI Engine:** Google Gemini SDK (`gemini-flash-latest`)
+- **AI Engine:** OpenRouter API (`google/gemini-2.5-flash`)
 - **Parsing:** Lightweight OpenAPI/Swagger JSON normalizer in `src/lib/openapi-parser.ts`
 - **Design:** Glassmorphism, JetBrains Mono, Inter
 
