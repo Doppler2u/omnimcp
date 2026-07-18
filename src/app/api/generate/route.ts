@@ -22,10 +22,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const resolvedSpecUrl =
-      typeof specUrl === 'string' && specUrl.startsWith('/')
-        ? new URL(specUrl, request.nextUrl.origin).toString()
-        : specUrl;
+    let resolvedSpecUrl = specUrl;
+    if (typeof specUrl === 'string' && specUrl.startsWith('/')) {
+      const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || request.nextUrl.host;
+      const proto = request.headers.get('x-forwarded-proto') || (request.nextUrl.protocol ? request.nextUrl.protocol.replace(':', '') : 'http');
+      resolvedSpecUrl = `${proto}://${host}${specUrl}`;
+    }
 
     // Step 1: Parse the OpenAPI spec
     const parsedApi = await parseOpenAPISpec(resolvedSpecUrl || specJson);
