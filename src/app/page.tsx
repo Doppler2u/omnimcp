@@ -251,7 +251,7 @@ export default function Home() {
               <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-6">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
               </div>
-              <h3 className="text-3xl font-bold text-white mb-4">0 USDT Pay-per-call</h3>
+              <h3 className="text-3xl font-bold text-white mb-4">1 USDT Pay-per-call</h3>
               <p className="text-slate-400 text-lg max-w-md leading-relaxed">Natively integrated with the OKX.AI Agent Marketplace. Publish your MCP agent as an ASP (API Service Provider) and monetize instantly on-chain.</p>
             </div>
             <div className="md:w-5/12 z-10 w-full">
@@ -262,12 +262,16 @@ export default function Home() {
                     <span className="w-3 h-3 rounded-full bg-amber-500 animate-pulse"></span>
                     Wallet Account 01
                   </span>
-                  <span className="text-amber-400/80 text-sm font-mono bg-amber-400/10 px-2 py-1 rounded-md">0x1f1...337a</span>
+                  <span className="text-amber-400/80 text-sm font-mono bg-amber-400/10 px-2 py-1 rounded-md">0x586f...ac43</span>
                 </div>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                    <span className="text-slate-400 text-sm">Agent ID</span>
+                    <span className="text-white text-sm font-semibold">6139</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
                     <span className="text-slate-400 text-sm">Status</span>
-                    <span className="text-emerald-400 text-sm font-semibold bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">Published</span>
+                    <span className="text-amber-400 text-sm font-semibold bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">Under Review</span>
                   </div>
                   <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
                     <span className="text-slate-400 text-sm">Role</span>
@@ -275,7 +279,7 @@ export default function Home() {
                   </div>
                   <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
                     <span className="text-slate-400 text-sm">Fee</span>
-                    <span className="text-amber-400 text-sm font-semibold font-jetbrains-mono">0.00 USDT</span>
+                    <span className="text-amber-400 text-sm font-semibold font-jetbrains-mono">1.00 USDT</span>
                   </div>
                 </div>
               </div>
