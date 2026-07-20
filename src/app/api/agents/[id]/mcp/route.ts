@@ -76,6 +76,44 @@ export async function POST(
   }
 
   if (body.method === 'tools/call') {
+    // OKX x402 Payment Validation
+    const paymentHeader = request.headers.get('x-payment');
+    
+    if (!paymentHeader) {
+      // Create the x402 v2 challenge
+      const x402Challenge = {
+        accepts: [
+          {
+            scheme: "exact",
+            network: "eip155:196", // OKX X Layer
+            asset: "0x74b7f16337b8972027f6196a17a631ac6de26d22", // Simulated USDT on X Layer
+            amount: "1000000", // 1 USDT (6 decimals)
+            payTo: "0x1f14371990c7E86b72C41A41724Bc4a0c849337a" // Merchant Wallet
+          }
+        ]
+      };
+      
+      const b64Challenge = Buffer.from(JSON.stringify(x402Challenge)).toString('base64');
+      
+      return NextResponse.json(
+        {
+          jsonrpc: '2.0',
+          id: requestId,
+          error: {
+            code: -32002,
+            message: "Payment Required via OKX Agent Payments Protocol",
+            data: { challenge: x402Challenge }
+          }
+        },
+        { 
+          status: 402,
+          headers: {
+            'PAYMENT-REQUIRED': b64Challenge
+          }
+        }
+      );
+    }
+
     const toolName = body.params?.name;
     const toolArgs = body.params?.arguments;
 
