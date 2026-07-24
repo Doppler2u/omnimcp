@@ -4,7 +4,7 @@
 
 Live app: https://omnimcp.onrender.com/
 
-Registered MCP endpoint: https://omnimcp.onrender.com/api/agents/demo-countries/mcp
+Registered MCP endpoint: https://omnimcp.onrender.com/api/agents/omnimcp-generator/mcp
 
 **OmniMCP** is an autonomous meta-agent that reads any OpenAPI/Swagger spec and instantly generates a functional MCP-style agent surface. It transforms legacy Web2 APIs into deployable Agent Service Provider (ASP) candidates for OKX.AI in under 60 seconds.
 
@@ -79,7 +79,7 @@ Each generated agent exposes a JSON-RPC endpoint at:
 The registered OKX.AI demo service uses:
 
 ```text
-https://omnimcp.onrender.com/api/agents/demo-countries/mcp
+https://omnimcp.onrender.com/api/agents/omnimcp-generator/mcp
 ```
 
 Supported methods:
@@ -87,7 +87,7 @@ Supported methods:
 ```json
 { "jsonrpc": "2.0", "id": 1, "method": "initialize" }
 { "jsonrpc": "2.0", "id": 2, "method": "tools/list" }
-{ "jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": { "name": "get_country_by_code", "arguments": { "code": "IN" } } }
+{ "jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": { "name": "generate_mcp_agent", "arguments": { "specUrl": "https://api.weather.com/openapi.json" } } }
 ```
 
 ## API Credentials
