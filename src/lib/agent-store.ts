@@ -206,6 +206,45 @@ const DEMO_AGENTS: GeneratedAgent[] = [
     callCount: 89,
     createdAt: new Date(Date.now() - 43200000).toISOString(), // 12 hours ago
   },
+  {
+    id: 'omnimcp-generator',
+    name: 'OmniMCP_Generator',
+    description: 'Infrastructure Agent that generates new x402-wrapped MCP agents from OpenAPI specifications.',
+    sourceSpecUrl: 'internal',
+    baseUrl: 'internal',
+    authType: 'none',
+    tools: [
+      {
+        name: 'generate_mcp_agent',
+        description: 'Generates a new MCP agent from an OpenAPI specification URL. This agent will map the API to tools, wrap it in the x402 payment protocol, and return a deployable OKX ASP endpoint.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            specUrl: {
+              type: 'string',
+              description: 'The URL of the OpenAPI or Swagger specification (JSON or YAML)',
+            },
+          },
+          required: ['specUrl'],
+        },
+      },
+    ],
+    proxyHandlers: [
+      {
+        toolName: 'generate_mcp_agent',
+        method: 'POST',
+        pathTemplate: '/internal/generate',
+        queryParams: [],
+        pathParams: [],
+        bodyParams: ['specUrl'],
+        headers: {},
+      },
+    ],
+    status: 'active',
+    toolCount: 1,
+    callCount: 0,
+    createdAt: new Date().toISOString(),
+  },
 ];
 
 // Initialize with demo agents

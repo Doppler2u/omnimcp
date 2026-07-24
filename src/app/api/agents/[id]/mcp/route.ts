@@ -3,8 +3,10 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getAgentById, incrementCallCount } from '@/lib/agent-store';
+import { getAgentById, incrementCallCount, saveAgent } from '@/lib/agent-store';
 import { executeAgentTool } from '@/lib/tool-proxy';
+import { parseOpenAPISpec } from '@/lib/openapi-parser';
+import { generateMCPTools } from '@/lib/gemini-client';
 
 interface JsonRpcRequest {
   id?: string | number | null;
@@ -120,6 +122,62 @@ export async function POST(
     if (typeof toolName !== 'string') {
       return jsonRpcError(requestId, -32602, 'tools/call requires params.name');
     }
+
+    // --- INTERCEPT LOCAL TOOLS (INFRASTRUCTURE AGENTS) ---
+    if (agent.id === 'omnimcp-generator' && toolName === 'generate_mcp_agent') {
+      try {
+        const specUrl = (toolArgs as Record<string, string>)?.specUrl;
+        if (!specUrl) {
+          return jsonRpcError(requestId, -32602, 'Missing specUrl parameter');
+        }
+
+        const parsedApi = await parseOpenAPISpec(specUrl);
+        if (parsedApi.endpoints.length === 0) {
+          return jsonRpcError(requestId, -32000, 'No valid endpoints found in the API spec');
+        }
+
+        const { agentName, agentDescription, tools, proxyHandlers } = await generateMCPTools(parsedApi);
+
+        const newAgent = await saveAgent({
+          name: agentName,
+          description: agentDescription,
+          sourceSpecUrl: specUrl,
+          baseUrl: parsedApi.baseUrl,
+          authType: parsedApi.authType,
+          tools,
+          proxyHandlers,
+          status: 'active',
+          toolCount: tools.length,
+          callCount: 0,
+        });
+
+        // Determine host dynamically based on request, or fallback to omnimcp.onrender.com
+        const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'omnimcp.onrender.com';
+        const proto = request.headers.get('x-forwarded-proto') || 'https';
+        const fullEndpoint = `${proto}://${host}/api/agents/${newAgent.id}/mcp`;
+
+        await incrementCallCount(id);
+
+        return jsonRpcResult(requestId, {
+          content: [
+            {
+              type: 'text',
+              text: `Success! A new MCP agent has been generated and wrapped in the OKX x402 payment protocol.\n\nAgent Name: ${newAgent.name}\nTools Mapped: ${newAgent.toolCount}\n\nYour deployable ASP endpoint is now live at:\n${fullEndpoint}`,
+            },
+          ],
+          structuredContent: {
+            agentId: newAgent.id,
+            name: newAgent.name,
+            toolCount: newAgent.toolCount,
+            endpoint: fullEndpoint,
+          },
+          meta: { latencyMs: 0 },
+        });
+      } catch (error) {
+        return jsonRpcError(requestId, -32000, (error as Error).message || 'Generation failed');
+      }
+    }
+    // -----------------------------------------------------
 
     const execution = await executeAgentTool(
       agent,

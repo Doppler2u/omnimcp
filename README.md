@@ -2,6 +2,10 @@
 
 *Built for the OKX.AI Genesis Hackathon* | 🏆 **Registered ASP Agent ID: #6139**
 
+Live app: https://omnimcp.onrender.com/
+
+Registered MCP endpoint: https://omnimcp.onrender.com/api/agents/demo-countries/mcp
+
 **OmniMCP** is an autonomous meta-agent that reads any OpenAPI/Swagger spec and instantly generates a functional MCP-style agent surface. It transforms legacy Web2 APIs into deployable Agent Service Provider (ASP) candidates for OKX.AI in under 60 seconds.
 
 ![OmniMCP Interface](public/Screenshot.png)
@@ -70,6 +74,12 @@ Each generated agent exposes a JSON-RPC endpoint at:
 
 ```text
 /api/agents/[id]/mcp
+```
+
+The registered OKX.AI demo service uses:
+
+```text
+https://omnimcp.onrender.com/api/agents/demo-countries/mcp
 ```
 
 Supported methods:
